@@ -64,7 +64,7 @@ class RBSheet extends Component {
       onStartShouldSetPanResponder: () => closeOnDragDown,
       onPanResponderMove: (e, gestureState) => {
         if (gestureState.dy > 0) {
-          Animated.event([null, { dy: pan.y }])(e, gestureState);
+          Animated.event([null, { dy: pan.y }], { useNativeDirver: true })(e, gestureState);
         }
       },
       onPanResponderRelease: (e, gestureState) => {
