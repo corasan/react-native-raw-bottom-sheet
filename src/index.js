@@ -39,12 +39,14 @@ class RBSheet extends Component {
       if (typeof onOpen === "function") onOpen(props);
       Animated.timing(animatedHeight, {
         toValue: height,
-        duration
+        duration,
+        useNativeDriver: false
       }).start();
     } else {
       Animated.timing(animatedHeight, {
         toValue: minClosingHeight,
-        duration
+        duration,
+        useNativeDriver: false
       }).start(() => {
         pan.setValue({ x: 0, y: 0 });
         this.setState({
@@ -64,14 +66,14 @@ class RBSheet extends Component {
       onStartShouldSetPanResponder: () => closeOnDragDown,
       onPanResponderMove: (e, gestureState) => {
         if (gestureState.dy > 0) {
-          Animated.event([null, { dy: pan.y }], { useNativeDriver: true })(e, gestureState);
+          Animated.event([null, { dy: pan.y }], { useNativeDriver: false })(e, gestureState);
         }
       },
       onPanResponderRelease: (e, gestureState) => {
         if (height / 4 - gestureState.dy < 0) {
           this.setModalVisible(false);
         } else {
-          Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start();
+          Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false }).start();
         }
       }
     });
